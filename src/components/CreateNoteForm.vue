@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <textarea @focusin="visibleNoteTitle()"
-                    class="py-2 px-3 form-control block w-full text-base  focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
+                    class="py-2 px-3 form-control block w-full text-base focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
                     placeholder="Tạo ghi chú..." id=""></textarea>
 
                 <div class="flex justify-around">

@@ -1,6 +1,6 @@
 <template>
-    <Transition>
-        <div v-if="getEditModalState" @blur="hideModal()" tabindex="0" class="w-screen h-screen flex justify-center items-center  bg-opacity-40 z-9999 bg-black">
+    <Transition name="bounce">
+        <div v-if="getEditModalState" class="w-screen h-screen flex justify-center items-center  bg-opacity-40 z-9999 bg-black">
             <form>
                 <div class="flex flex-col min-h-auto max-h-[70vh] w-[30rem] bg-white shadow-custom rounded-xl  p-3 -mt-32">
                     <div class="flex-row">
@@ -43,16 +43,18 @@ export default {
     },
     data(){
         return {
-            //ModalState : useModalState(),
+          isPin: false,
         }
     },
     emits: ["saveNote",],
     methods:{
         ...mapMutations({closeEditModal: "closeEditModal"}),
-
         hideModal(){
             this.$emit('saveNote')
-        }
+        },
+        pinNote() {
+            this.isPin = !this.isPin;
+        },
     },
     computed: {
         ...mapGetters({getEditModalState: "getEditModalState"})
@@ -66,13 +68,38 @@ export default {
     box-shadow: 0 0 5px;
 }
 
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
+
+/* define appear animation */
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.3s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  25%{
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  75%{
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
+/* .v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}*/
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-}
+} 
 </style>

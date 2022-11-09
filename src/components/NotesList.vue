@@ -3,9 +3,9 @@
      <NoteCard :content = "noteContent"/>
      <NoteCard content="
      Lorem ipsumaliquam quam eius fuga voluptatem. Assumen esse doloremque magni consequuntur laudantium!"/>
-     <!-- <NoteCard content="ok hihih"/>
+     <NoteCard content="ok hihih"/>
      <NoteCard/>
-     <NoteCard content="
+     <!-- <NoteCard content="
      Lorem ipsum dolor sit amet consectetur, adipisicing elit. In explicabo minima totam eos dignissimos aliquam quam eius fuga voluptatem. Assumenda doloribus ducimus ullam eum, nesciunt esse doloremque magni consequuntur laudantium!"/>
      <NoteCard content="ok hihih"/>
      <NoteCard/>

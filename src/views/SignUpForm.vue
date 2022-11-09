@@ -4,66 +4,60 @@
       <Header state="signUpForm" />
     </div>
     <section class="h-auto">
-    <div class="px-6 h-[90%]">
-      <div class="flex justify-center items-center flex-wrap h-full mt-10 g-6 text-gray-800">
-        <div class="md:w-4/12 lg:w-4/12 py-5 px-8 rounded-xl shadow-2xl">
-          <form>
-            <div class="text-center font-semibold text-2xl py-4">Đăng ký tài khoản</div>
-            <!--UserName input -->
-            <div class="mb-4">
-              <div class="mb-1">
+      <div class="px-6 h-[90%]">
+        <div class="flex justify-center items-center flex-wrap h-full mt-10 g-6 text-gray-800">
+          <div class="md:w-4/12 lg:w-4/12 py-5 px-8 rounded-xl shadow-2xl">
+            <Form :validation-schema="signupFormSchema">
+              <div class="text-center font-semibold text-2xl py-4">Đăng ký tài khoản</div>
+              <!--UserName input -->
+              <div class="mb-4">
+                <div class="mb-1">
                   <label for="username" class="text-lg">Tên tài khoản</label>
                 </div>
-              <input
-                v-model="username"
-                type="text"
-                class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Tên tài khoản" />
-            </div>
-            <!-- Email input -->
-            <div class="mb-4">
-              <div class="mb-1">
+                <Field name="username" v-model="username" type="text"
+                  class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  placeholder="Tên tài khoản" />
+                <ErrorMessage name="username" class="error-feedback" />
+              </div>
+              <!-- Email input -->
+              <div class="mb-4">
+                <div class="mb-1">
                   <label for="email" class="text-lg">Email</label>
                 </div>
-              <input
-                v-model="email"
-                type="text"
-                class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Email" />
-            </div>
+                <Field name="email" v-model="email" type="text"
+                  class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  placeholder="Email" />
+                <ErrorMessage name="email" class="error-feedback" />
+              </div>
 
-            <!-- Password input -->
-            <div class="mb-4">
-              <div class="mb-1">
-                  <label for="email" class="text-lg">Mật khẩu</label>
+              <!-- Password input -->
+              <div class="mb-4">
+                <div class="mb-1">
+                  <label for="password" class="text-lg">Mật khẩu</label>
                 </div>
-              <input
-                v-model="password"
-                type="password"
-                class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Mật khẩu" />
-            </div>
-            <!-- Password re-input -->
-            <div class="mb-6">
-              <div class="mb-1">
-                  <label for="email" class="text-lg">Nhập lại mật khẩu</label>
+                <Field name="password" v-model="password" type="password" 
+                  class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  placeholder="Mật khẩu" />
+                <ErrorMessage name="password" class="error-feedback" />
+              </div>
+              <!-- Password re-input -->
+              <div class="mb-6">
+                <div class="mb-1">
+                  <label for="repassword" class="text-lg">Nhập lại mật khẩu</label>
                 </div>
-              <input
-                v-model="repassword"
-                type="password"
-                class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Nhập lại mật khẩu" />
-            </div>
+                <Field name="repassword" v-model="repassword" type="password"
+                  class="form-control block w-full px-4 py-1.5 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  placeholder="Nhập lại mật khẩu" />
+                <ErrorMessage name="repassword" class="error-feedback" />
+              </div>
 
-            <!-- Submit button -->
-            <button
-              @click="signUpAccount()"
-              type="submit"
-              class="inline-block px-7 py-3 bg-[#247759] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#175E45] hover:shadow-lg focus:bg-[#175E45] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#238E68] active:shadow-lg transition duration-150 ease-in-out w-full"
-              data-mdb-ripple="true" data-mdb-ripple-color="light">
-              Đăng ký tài khoản
-            </button>
-<!-- 
+              <!-- Submit button -->
+              <button @click="signUpAccount()" type="button"
+                class="inline-block px-7 py-3 bg-[#247759] text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-[#175E45] hover:shadow-lg focus:bg-[#175E45] focus:shadow-lg focus:outline-none focus:ring-0 active:bg-[#238E68] active:shadow-lg transition duration-150 ease-in-out w-full"
+                data-mdb-ripple="true" data-mdb-ripple-color="light">
+                Đăng ký tài khoản
+              </button>
+              <!-- 
             <div
               class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
               <p class="text-center font-semibold mx-4 mb-0">Hoặc</p>
@@ -89,38 +83,61 @@
                   d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
               </svg>Tiếp tục với Twitter
             </a> -->
-          </form>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   </div>
 
 </template>
 
 <script>
 import Header from '@/components/Header.vue';
-  export default{
-    name: "SignUpForm",
-    components:{
-      Header,
-    },
-    data(){
-      return{
-        username: "",
-        email: "",
-        password: "",
-        repassword: "",
-      }
-    },
-    methods:{
-      signUpAccount(){
-        if(!(this.password==this.repassword))
-          alert("Mật khẩu chưa trùng khớp")
+import * as yup from "yup";
+import { Form, Field, ErrorMessage } from "vee-validate";
+export default {
+  name: "SignUpForm",
+  components: {
+    Header,
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  data() {
+    const signupFormSchema = yup.object().shape({
+      username: yup.string().required("Bạn cần nhập tên tài khoản."),
+      email: yup
+        .string()
+        .required("Bạn cần nhập Email")
+        .email("Email không đúng.")
+        .max(50, "Email tối đa 50 ký tự."),
+      password: yup.string().required('Bạn cần nhập mật khẩu'),
+      repassword: yup.string().oneOf([yup.ref('password'), null], 'Mật khẩu phải giống nhau')
+    });
 
-          //do something to dangki tai khoan
-      }
+    return {
+      username: "",
+      email: "",
+      password: "",
+      repassword: "",
+      signupFormSchema
     }
+  },
+  methods: {
+    signUpAccount() {
+      if (!(this.password == this.repassword))
+        alert("Mật khẩu chưa trùng khớp")
 
+      //do something to dangki tai khoan
+    }
   }
+
+}
 </script>
+
+<style scoped>
+  .error-feedback{
+    color: red
+  }
+</style>
