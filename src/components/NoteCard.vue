@@ -8,10 +8,10 @@
             </div>
         </Transition>
         <div class="title mt-[0.85rem]">
-            {{ title }}
+            {{ data.title }}
         </div>
         <div class="content mt-3">
-            {{ content }}
+            {{ data.content }}
         </div>
     </div>
 </template>
@@ -21,8 +21,7 @@ import { mapMutations } from 'vuex';
 
 export default {
     props: {
-        content: String,
-        title: String,
+        data: {},
     },
     data() {
         return {

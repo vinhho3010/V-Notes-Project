@@ -6,19 +6,8 @@
 
 <script>
   
-    export default {
-      components: {
+    export default {}
 
-      },
-      data(){
-        return {
-  
-        }
-      },
-      methods:{
-
-      }
-    };
 </script>
 
 

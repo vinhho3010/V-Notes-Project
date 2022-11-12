@@ -30,6 +30,7 @@ import SideNav from '@/components/SideNav.vue';
 import NotesList from '@/components/NotesList.vue'
 import CreateNoteForm from '@/components/CreateNoteForm.vue';
 import EditNoteModal from '../components/EditNoteModal.vue';
+import { mapActions } from 'vuex';
 export default {
     components: {
         Header,
@@ -47,16 +48,11 @@ export default {
     methods: {
         logout() {
             if (confirm('Bạn có chắc chắn muốn đăng xuất không?')) {
-                //do something here
+                localStorage.clear();
                 this.$router.push('/');
             }
-
         },
-    computed: {
-        
-    }
-
-    }
+    },
 }
 
 </script>
