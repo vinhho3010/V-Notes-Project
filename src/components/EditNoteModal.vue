@@ -68,7 +68,6 @@ export default {
     box-shadow: 0 0 5px;
 }
 
-
 /* define appear animation */
 .bounce-enter-active {
   animation: bounce-in 0.5s;

@@ -5,14 +5,16 @@
             <div class="flex flex-col min-h-auto max-h-56 w-[30rem] shadow-custom rounded-xl mt-4 p-3">
                 <div :class="isVisible" class="flex-row">
                     <input
+                        v-model="note.title"
                         class="inputTitle py-2 px-3 form-control w-[90%] text-base inline-block focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
                         type="text" placeholder="Tiêu đề">
                     <div @click="pinNote()"
                         class="pin inline-block rounded-full px-2 py-1 text-xl cursor-pointer hover:bg-gray-300">
-                        <i :class="{ 'bxs-pin': isPin, 'bx-pin': !isPin }" class='bx'></i>
+                        <i :class="{ 'bxs-pin': note.isPin, 'bx-pin': !note.isPin }" class='bx'></i>
                     </div>
                 </div>
                 <textarea @focusin="visibleNoteTitle()"
+                    v-model="note.content"
                     class="py-2 px-3 form-control block w-full text-base focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
                     placeholder="Tạo ghi chú..." id=""></textarea>
 
@@ -35,26 +37,69 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import Swal from 'sweetalert2';
+
 export default {
+    name: "CreateNoteForm",
     data() {
         return {
+            note: {
+                title: "",
+                content: "",
+                color: "#ffffff",
+                isDeleted: false,
+                isPin: false,
+            },
             isVisible: "hidden",
-            isPin: false,
         }
     },
+    computed: {
+        ...mapGetters({getAccountInfor: "getAccountInfor",
+                        getNoteList: "getNoteList"})
+    },
     methods: {
+        ...mapActions({createNewNote: "createNewNote",
+                        getAllNotes: "getAllNotes"}),
         visibleNoteTitle() {
             this.isVisible = "block";
         },
-        saveNote() {
-            console.log("Save note handle");
-        },
         pinNote() {
-            this.isPin = !this.isPin;
+            this.note.isPin = !this.note.isPin;
         },
         hideForm(){
-            this.saveNote();
             this.isVisible = 'hidden'
+        },
+        refreshInput(){
+            this.note.content = "";
+            this.note.title = "";
+            this.note.isPin = false;
+        },
+        async saveNote(){
+            if(!this.note.title && !this.note.content){
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  });
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Vui lòng nhập nội dung cho ghi chú!!'
+                  });     
+            } else{
+                const payload = {
+                    userId: this.getAccountInfor._id,
+                    note: this.note
+                }
+                await this.createNewNote(payload);
+                await this.getAllNotes(this.getAccountInfor._id);
+                this.refreshInput();
+            }
         }
 
     }

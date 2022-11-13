@@ -31,6 +31,7 @@ import NotesList from '@/components/NotesList.vue'
 import CreateNoteForm from '@/components/CreateNoteForm.vue';
 import EditNoteModal from '../components/EditNoteModal.vue';
 import { mapActions } from 'vuex';
+import Swal from 'sweetalert2';
 export default {
     components: {
         Header,
@@ -47,10 +48,20 @@ export default {
     },
     methods: {
         logout() {
-            if (confirm('Bạn có chắc chắn muốn đăng xuất không?')) {
-                localStorage.clear();
-                this.$router.push('/');
-            }
+            Swal.fire({
+                title: 'Đăng xuất',
+                text: 'Bạn có muốn đăng xuất?',
+                showDenyButton: true,
+                confirmButtonColor: "#DC3741",
+                denyButtonColor: "#BDB8B7",
+                confirmButtonText: 'Đăng xuất',
+                denyButtonText: `Không`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.clear();
+                    this.$router.push('/');
+                }
+            })
         },
     },
 }

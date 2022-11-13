@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import createPersistedState from "vuex-persistedstate";
 import AuthModule from "./AuthModule";
 import NotesModule from "./NotesModule"
 import AccountModule from "./AccountModule"
@@ -12,7 +13,8 @@ const store = createStore({
         NotesModule,
         AccountModule,
         ModalStateModule,
-    }
+    },
+    plugins: [createPersistedState()],
 });
 
 export default store
