@@ -1,7 +1,8 @@
 
 const ModalStateModule = {
   state: {
-    isShowEditModal: false
+    isShowEditModal: false,
+    noteEdit: {},
   },
   getters: {
     getEditModalState(state) {

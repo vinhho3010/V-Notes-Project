@@ -1,5 +1,4 @@
 import axios from "axios"
-import { compileScript } from "vue/compiler-sfc";
 import config from "../config";
 const NotesModule = {
     state: {
@@ -20,11 +19,15 @@ const NotesModule = {
         },
         getNoteList(state){
             return state.noteList;          
+        },
+        getReverseNoteList(state){
+            return state.noteList.slice().reverse();
         }
     },
     mutations: {
         SET_NOTE(state, newNote){
-            state.note._id = newNote.id;
+            state.note.ownerID = newNote.ownerID;
+            state.note._id = newNote._id;
             state.note.title = newNote.title;
             state.note.content = newNote.content;
             state.note.color = newNote.color;
@@ -35,10 +38,6 @@ const NotesModule = {
             state.noteList = noteList;
         },
         ADD_NEW_NOTE(state){
-
-            // if(state.noteList === undefined){
-            //     state.noteList = [];
-            // }
             //add new note to noteList 
             state.noteList.push(state.note);
             console.log(state.noteList);
@@ -59,6 +58,7 @@ const NotesModule = {
                 const response = await axios.get(`${config.server}/notes/${userId}`).then((response) => {
                     //if user have note, store them into note store
                     commit("SET_NOTE_LIST", response.data.result);
+
                     console.log(response.data.result);
                 });
             } catch (error) {
@@ -78,6 +78,32 @@ const NotesModule = {
                     commit("SET_NOTE", response.data.result);
                     commit("ADD_NEW_NOTE");
                 })
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async updateNote({commit}, payload){
+            try {
+                const response = await axios.post(`${config.server}/notes/note/${payload.note._id}`, {
+                    ownerID: payload.userId,
+                    title: payload.note.title,
+                    content: payload.note.content,
+                    color: payload.note.color,
+                    isDeleted: payload.note.isDeleted,
+                    isPin: payload.note.isPin,
+                }).then( response => {
+                    return response.data.result;
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async deleteNote({commit}, payload){
+            try {
+                const response = await axios.delete(`${config.server}/notes/note/${payload.note._id}`, {
+                }).then( response => {
+                    return response.data.result;
+                });
             } catch (error) {
                 console.log(error);
             }

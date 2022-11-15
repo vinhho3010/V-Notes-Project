@@ -1,10 +1,9 @@
 <template>
     <div class="h-auto w-full mb-2 max-w-full grid grid-flow-row-dense  md:grid-cols-4 gap-x-1 gap-y-5 sm:grid-cols-3 ">
-     <div v-if="getNoteList==[] || getNoteList == undefined" class="mx-auto mt-20 text-2xl col-span-4 row-span-2 text-green-700">Bạn chưa có ghi chú nào</div>
-     <NoteCard
-     v-else
-     v-for="note in getNoteList" :key="note._id"
-     :data = "note"/>
+        <div v-if="getNoteList == [] || getNoteList == undefined"
+            class="mx-auto mt-20 text-2xl col-span-4 row-span-2 text-green-700">Bạn chưa có ghi chú nào</div>
+        <NoteCard v-else v-for="note in getReverseNoteList" :key="note._id" :note="note" />
+        
     </div>
 </template>
 
@@ -19,12 +18,12 @@ import {mapActions, mapGetters} from 'vuex';
         data(){
             return{
                 note: {},
-                noteList: [],
             }
         },
         computed: {
             ...mapGetters({getAccountInfor: "getAccountInfor",
-                           getNoteList: "getNoteList"}),
+                           getNoteList: "getNoteList",
+                           getReverseNoteList: "getReverseNoteList"}),
         },
         methods: {
             ...mapActions({getAllNotes: "getAllNotes"}),

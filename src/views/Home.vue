@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="w-screen z-[9999] absolute top-0">
+        <div class="w-screen z-[99] absolute top-0">
             <EditNoteModal :showEditModal="showEditModal" />
         </div>
     </div>
@@ -30,7 +30,6 @@ import SideNav from '@/components/SideNav.vue';
 import NotesList from '@/components/NotesList.vue'
 import CreateNoteForm from '@/components/CreateNoteForm.vue';
 import EditNoteModal from '../components/EditNoteModal.vue';
-import { mapActions } from 'vuex';
 import Swal from 'sweetalert2';
 export default {
     components: {

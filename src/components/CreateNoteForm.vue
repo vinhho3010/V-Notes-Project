@@ -76,8 +76,7 @@ export default {
             this.note.isPin = false;
         },
         async saveNote(){
-            if(!this.note.title && !this.note.content){
-                const Toast = Swal.mixin({
+            const Toast = Swal.mixin({
                     toast: true,
                     position: 'bottom-end',
                     showConfirmButton: false,
@@ -87,6 +86,7 @@ export default {
                       toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                   });
+            if(!this.note.title && !this.note.content){
                 Toast.fire({
                     icon: 'warning',
                     title: 'Vui lòng nhập nội dung cho ghi chú!!'
@@ -97,8 +97,16 @@ export default {
                     note: this.note
                 }
                 await this.createNewNote(payload);
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm ghi chú thành công'
+                  });
+                  
                 await this.getAllNotes(this.getAccountInfor._id);
                 this.refreshInput();
+
+                
             }
         }
 
