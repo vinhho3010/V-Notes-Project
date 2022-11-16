@@ -22,30 +22,42 @@
         <router-link to="/">
           Đăng nhập</router-link>
       </a>
-      <a v-else-if="state == 'home'"
+      <!-- <a v-else-if="state == 'home'"
         @click="logout()"
         class="inline-block text-sm px-4 mr-4 py-2 leading-none border rounded cursor-pointer text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
         Đăng xuất
+      </a> -->
+      <a v-else-if="state == 'home'"
+        class="inline-block text-sm px-4 mr-4 py-2 rounded-full leading-none border cursor-pointer text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">
+        <div class="flex flex-row">
+          <div class="text-lg mr-1 mt-[0.1rem]"><i class='bx bxs-user'></i></div>
+          <div class=" py-1 ml-1 mt-[1px] text-sm font-semibold"> {{getAccountInfor.username}}</div>
+        </div>
       </a>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import SearchBar from './SearchBar.vue';
 
 export default {
     name: "Header",
+    components: { SearchBar },
     props: {
         state: String,
     },
     emits: ["logout"],
+    computed: {
+      ...mapGetters({getAccountInfor: "getAccountInfor"})
+    },
     methods: {
         logout() {
             this.$emit("logout");
         }
     },
-    components: { SearchBar }
+    
 }
 </script>
 

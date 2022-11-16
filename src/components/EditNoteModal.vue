@@ -14,7 +14,7 @@
             </div>
           </div>
           <textarea v-model="editedNote.content" rows="4"
-            class="py-2 px-3 form-control block w-full text-base  focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
+            class="py-2 px-3 form-control block w-full text-base focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
             placeholder="Tạo ghi chú..." id=""></textarea>
           <div class="flex justify-around">
             <button @click="editNote()"
@@ -91,17 +91,7 @@ export default {
           this.closeEditModal()
 
           //show alert notification
-          const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer)
-                      toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                  });
-          Toast.fire({icon: 'success',title: 'Ghi chú được xoá thành công'});      
+          Swal.fire("", "Ghi chú được xoá thành công", "success");  
           
     },
     //edit note chosen

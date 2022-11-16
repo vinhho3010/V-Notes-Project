@@ -6,7 +6,7 @@
 
         <div v-else class="note-list">
         <div v-if="getPinNoteList.length!=0" class="block w-full ml-1 mb-2 text-[0.7rem] font-bold text-gray-500 uppercase">Được ghim</div>
-        <div class="h-auto w-full mb-2 max-w-full grid grid-flow-row-dense  md:grid-cols-4 gap-x-1 gap-y-5 sm:grid-cols-3 ">
+        <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4 gap-y-5 sm:grid-cols-3 ">
             <!-- list pin Note -->
             <transition-group name="list" >
                 <NoteCard v-if="getPinNoteList!=[]" v-for="PinNote in getPinNoteList" :key="PinNote._id" :note="PinNote"/>
@@ -14,7 +14,7 @@
         </div>
 
         <div v-if="getPinNoteList.length!=0" class="block w-full ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Khác</div>
-        <div class="h-auto w-full mb-2 max-w-full grid grid-flow-row-dense  md:grid-cols-4 gap-x-1 gap-y-5 sm:grid-cols-3 ">
+        <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4  gap-y-5 sm:grid-cols-3 ">
             <!-- list NOT pin note -->
             <transition-group name="list" >
                     <NoteCard v-if="getNotPinNoteList!=[]" v-for="note in getNotPinNoteList" :key="note._id" :note="note" />

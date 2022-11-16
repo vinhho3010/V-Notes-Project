@@ -22,7 +22,9 @@
       </li>
    
       <li>
-        <a href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
+        <a
+        @click="logout()"
+        href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
           <span class="inline-flex items-center justify-center h-12 w-12 text-xl text-gray-400"><i class="bx bx-log-out"></i></span>
           <span class="text-[0.95 rem] font-medium">Đăng xuất</span>
         </a>
@@ -38,9 +40,15 @@
         props: {
             isShow: Boolean,
         },
+        emits: ["logout"],
         data(){
           return{
           }
         },
+        methods: {
+          logout() {
+            this.$emit("logout");
+        }
+        }
     }
 </script>
