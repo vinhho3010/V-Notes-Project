@@ -1,6 +1,6 @@
 <template>
-        <div @click="editableButton()" @blur="unEditableButton()" tabindex="0"
-        class="w-[90%] min-h-[30px] max-h-60 py-4 px-3  rounded-xl relative bg-white shadow-custom-bold border-2 border-solid border-gray-300 overflow-hidden ">
+    <div @click="editableButton()" @blur="unEditableButton()" tabindex="0"
+        class="w-[90%] min-h-[30px] max-h-60 py-4 px-3 rounded-xl relative bg-white shadow-custom-bold border-[1.5px] border-solid border-gray-300 overflow-hidden ">
         <Transition>
             <div v-if="showEditButton" @click="editNote()"
                 class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer hover:bg-gray-400 rounded-full">
@@ -41,7 +41,7 @@ export default {
             this.$store.commit("displayEditModal");
         },
         ...mapMutations({ displayEditModal: "displayEditModal",
-                        SET_NOTE: "setNote"}),
+                          SET_NOTE: "setNote"}),
     },
     computed: {
         ...mapGetters({getNote: "getNote"})

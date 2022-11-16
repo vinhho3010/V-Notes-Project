@@ -117,6 +117,14 @@ const NotesModule = {
             } catch (error) {
                 console.log(error);
             }
+        },
+        searchNote({commit}, searchText){
+            // return noteList.filter(
+            //     (note) =>{
+            //         return note.content.includes(searchText) || note.title.includes(searchText);
+            //     }
+            // )
+            console.log("search Handler");
         }
 
     }

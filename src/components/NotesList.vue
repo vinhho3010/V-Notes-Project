@@ -1,12 +1,15 @@
 <template>
     <div class="">
+        <div v-if="getNoteList == [] || getNoteList == undefined" class="ml-[37%]  mt-20 text-2xl text-green-700">
+             Bạn chưa có ghi chú nào
+        </div>
+
+        <div v-else class="note-list">
         <div v-if="getPinNoteList.length!=0" class="block w-full ml-1 mb-2 text-[0.7rem] font-bold text-gray-500 uppercase">Được ghim</div>
         <div class="h-auto w-full mb-2 max-w-full grid grid-flow-row-dense  md:grid-cols-4 gap-x-1 gap-y-5 sm:grid-cols-3 ">
             <!-- list pin Note -->
             <transition-group name="list" >
-                
                 <NoteCard v-if="getPinNoteList!=[]" v-for="PinNote in getPinNoteList" :key="PinNote._id" :note="PinNote"/>
-            
             </transition-group>
         </div>
 
@@ -14,11 +17,10 @@
         <div class="h-auto w-full mb-2 max-w-full grid grid-flow-row-dense  md:grid-cols-4 gap-x-1 gap-y-5 sm:grid-cols-3 ">
             <!-- list NOT pin note -->
             <transition-group name="list" >
-                    <div v-if="getNoteList == [] || getNoteList == undefined"
-                        class="mx-auto mt-20 text-2xl col-span-4 row-span-2 text-green-700">Bạn chưa có ghi chú nào</div>
-                    <NoteCard v-else v-for="note in getNotPinNoteList" :key="note._id" :note="note" />
+                    <NoteCard v-if="getNotPinNoteList!=[]" v-for="note in getNotPinNoteList" :key="note._id" :note="note" />
             </transition-group>
         </div>
+    </div>
     </div>
 </template>
 

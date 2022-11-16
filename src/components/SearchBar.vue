@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex';
 export default{
     name: "SeachBar",
     data(){
@@ -25,8 +25,13 @@ export default{
             searchText: "",
         }
     },
+    watch: {
+        searchText(){
+            console.log(this.searchNote(this.searchText));
+        }
+    },
     methods:{
-
+        ...mapActions({searchNote: "searchNote"})
     }
 }
 </script>
