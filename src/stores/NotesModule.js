@@ -22,6 +22,16 @@ const NotesModule = {
         },
         getReverseNoteList(state){
             return state.noteList.slice().reverse();
+        },
+        getPinNoteList(state){
+            return state.noteList.slice().filter((note) =>{
+                return note.isPin == true
+            }).reverse();     
+        },
+        getNotPinNoteList(state){
+            return state.noteList.slice().filter((note) =>{
+                return note.isPin == false
+            }).reverse();   
         }
     },
     mutations: {

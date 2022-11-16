@@ -56,9 +56,11 @@ export default {
   },
   methods: {
     ...mapMutations({ closeEditModal: "closeEditModal" }),
+    //change state of pin attribute
     pinNote() {
       this.editedNote.isPin = !this.editedNote.isPin;
     },
+
     confirmDeleteNote() {
       //show confirm modal to delete note
       Swal.fire({
@@ -84,12 +86,22 @@ export default {
       };
        //call action from store to update note
           await this.deleteNote(payload); 
+        //reload edited notelist
           await this.getAllNotes(this.getAccountInfor._id); 
-          this.closeEditModal() 
-          Swal.fire("", "Ghi chú được xoá thành công", "success");      
-          //reload edited notelist
-          
-          
+          this.closeEditModal()
+
+          //show alert notification
+          const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  });
+          Toast.fire({icon: 'success',title: 'Ghi chú được xoá thành công'});      
           
     },
     //edit note chosen
@@ -107,6 +119,7 @@ export default {
 
       this.closeEditModal()
       Swal.fire("", "Ghi chú được cập nhật thành công", "success");
+
 
     },
     ...mapActions({
@@ -142,11 +155,11 @@ export default {
 
 /* define appear animation */
 .bounce-enter-active {
-  animation: bounce-in 0.5s;
+  animation: bounce-in 0.45s;
 }
 
 .bounce-leave-active {
-  animation: bounce-in 0.3s reverse;
+  animation: bounce-in 0.2s reverse;
 }
 
 @keyframes bounce-in {
