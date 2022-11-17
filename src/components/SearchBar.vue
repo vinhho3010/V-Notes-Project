@@ -28,6 +28,9 @@ export default{
     watch: {
         searchText(){
             this.filterSearch(this.searchText.trim())
+        },
+        getNoteList(){
+            this.filterSearch(this.searchText.trim())
         }
     },
     computed: {
@@ -35,7 +38,8 @@ export default{
         
     },
     methods:{
-        ...mapActions({filterSearch: "filterSearch"})
+        ...mapActions({filterSearch: "filterSearch",
+                        getAllNotes: "getAllNotes"})
     }
 }
 </script>

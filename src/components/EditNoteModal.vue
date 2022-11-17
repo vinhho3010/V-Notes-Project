@@ -115,7 +115,7 @@ export default {
     ...mapActions({
       updateNote: "updateNote",
       deleteNote: "deleteNote",
-      getAllNotes: "getAllNotes"
+      getAllNotes: "getAllNotes",
     })
   },
   computed: {
