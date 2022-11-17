@@ -12,6 +12,7 @@ const NotesModule = {
             isDeleted: false,
         },
         noteList: [],
+        noteSearchList: [],
     },
     getters: {
         getNote(state){
@@ -19,6 +20,9 @@ const NotesModule = {
         },
         getNoteList(state){
             return state.noteList;          
+        },
+        getNoteSearchList(state){
+            return state.noteSearchList.slice().reverse();          
         },
         getReverseNoteList(state){
             return state.noteList.slice().reverse();
@@ -46,6 +50,9 @@ const NotesModule = {
         },
         SET_NOTE_LIST(state, noteList){
             state.noteList = noteList;
+        },
+        SET_NOTE_SEARCH_LIST(state, noteList){
+            state.noteSearchList = noteList;
         },
         ADD_NEW_NOTE(state){
             //add new note to noteList 
@@ -118,15 +125,19 @@ const NotesModule = {
                 console.log(error);
             }
         },
-        searchNote({commit}, searchText){
-            // return noteList.filter(
-            //     (note) =>{
-            //         return note.content.includes(searchText) || note.title.includes(searchText);
-            //     }
-            // )
-            console.log("search Handler");
+        filterSearch({commit, state}, searchText){
+            if(searchText=='' || searchText == undefined){
+                commit("SET_NOTE_SEARCH_LIST", [])
+                return;
+            }
+        const noteListGetter = state.noteList;
+            const result = noteListGetter.filter(note => {
+                return note.content.trim().toLowerCase().includes(searchText.trim().toLowerCase()) 
+                        || note.title.trim().toLowerCase().includes(searchText.trim().toLowerCase());
+            })
+        console.log(result);
+         commit("SET_NOTE_SEARCH_LIST", result);
         }
-
     }
 }
 

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default{
     name: "SeachBar",
     data(){
@@ -27,11 +27,15 @@ export default{
     },
     watch: {
         searchText(){
-            console.log(this.searchNote(this.searchText));
+            this.filterSearch(this.searchText.trim())
         }
     },
+    computed: {
+        ...mapGetters({getNoteList: "getNoteList"}),
+        
+    },
     methods:{
-        ...mapActions({searchNote: "searchNote"})
+        ...mapActions({filterSearch: "filterSearch"})
     }
 }
 </script>
