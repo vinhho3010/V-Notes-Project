@@ -19,10 +19,16 @@
             class="py-2 px-3 form-control block w-full text-base focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
             placeholder="Tạo ghi chú..." id=""></textarea>
           <div class="flex justify-around">
-            <button @click="editNote()"
+            <button v-show="this.currentRoute=='/home'" @click="editNote()"
               class="w-22 text-sm bg-green-500 hover:bg-green-700 text-white font-bold ml-5 mt-3 py-1.5 px-6 rounded"
               type="button">
               Cập nhật
+            </button>
+
+            <button v-show="this.currentRoute=='/trash'" @click="restoreNote()"
+              class="w-22 text-sm bg-yellow-500 hover:bg-yellow-600 text-white font-bold ml-5 mt-3 py-1.5 px-6 rounded"
+              type="button">
+              Khôi phục
             </button>
 
             <button @click="confirmDeleteNote()"
@@ -53,6 +59,7 @@ export default {
   data() {
     return {
       isPin: false,
+      currentRoute: "",
       editedNote: {}
     }
   },
@@ -64,19 +71,28 @@ export default {
     },
 
     confirmDeleteNote() {
+      let notiText = "Bạn muốn xoá vĩnh viễn ghi chú này?";
+      if(this.currentRoute == "/home"){
+        notiText = "Bạn muốn chuyển ghi chú vào thùng rác?"
+      } else if(this.currentRoute == "/trash"){
+        notiText = "Bạn muốn xoá vĩnh viễn ghi chú này?"
+      }
       //show confirm modal to delete note
       Swal.fire({
         title: 'Xoá',
-        text: 'Bạn muốn xoá ghi chú này?',
+        text: notiText,
         showDenyButton: true,
         confirmButtonColor: "#DC3741",
         denyButtonColor: "#BDB8B7",
         confirmButtonText: 'Xoá',
         denyButtonText: `Huỷ bỏ`,
       }).then((result)=> {
-        if(result.isConfirmed){
+        if(this.currentRoute=="/trash" && result.isConfirmed){
           //if user want to delete note, delete it by call deleteNoteHandle function
           this.deleteNoteHandle();
+        } else if(this.currentRoute=="/home" && result.isConfirmed){
+          //move note to trash
+          this.moveToTrash()
         }
       });
     },
@@ -91,28 +107,50 @@ export default {
         //reload edited notelist
           await this.getAllNotes(this.getAccountInfor._id); 
           this.closeEditModal()
-
           //show alert notification
-          Swal.fire("", "Ghi chú được xoá thành công", "success");  
-          
+          Swal.fire("", "Ghi chú được xoá thành công", "success");    
     },
-    //edit note chosen
-    async editNote() {
+    async moveToTrash(){
+      //change state of isDeleted attribute to move note into trash
+      this.editedNote.isDeleted = true;
       const payload = {
         userId: this.getAccountInfor._id,
         note: this.editedNote,
       };
-
       //call action from store to update note
       await this.updateNote(payload);
-
       //reload edited notelist
       await this.getAllNotes(this.getAccountInfor._id);
+      this.closeEditModal()
+      Swal.fire("", "Ghi chú được chuyển vào thùng rác", "success");
+    },
+    async restoreNote(){
+      this.editedNote.isDeleted = false;
+      const payload = {
+        userId: this.getAccountInfor._id,
+        note: this.editedNote,
+      };
+      //call action from store to update note
+      await this.updateNote(payload);
+      //reload edited notelist
+      await this.getAllNotes(this.getAccountInfor._id);
+      this.closeEditModal()
+      Swal.fire("", "Ghi chú được khôi phục thành công", "success");
+    },
 
+    //edit note chosen
+    async editNote() {
+
+      const payload = {
+        userId: this.getAccountInfor._id,
+        note: this.editedNote,
+      };
+      //call action from store to update note
+      await this.updateNote(payload);
+      //reload edited notelist
+      await this.getAllNotes(this.getAccountInfor._id);
       this.closeEditModal()
       Swal.fire("", "Ghi chú được cập nhật thành công", "success");
-
-
     },
     ...mapActions({
       updateNote: "updateNote",
@@ -131,10 +169,15 @@ export default {
     //get data from selected note when display edit modal
     getEditModalState() {
       this.editedNote = { ...this.getNote }
+    },
+    $route(to, from){
+      this.currentRoute = this.$route.fullPath
+      console.log(this.currentRoute);
     }
   },
   mounted() {
     this.editedNote = { ...this.getNote }
+    this.currentRoute = "/home"
   },
 }
 
@@ -144,12 +187,9 @@ export default {
 .shadow-custom {
   box-shadow: 0 0 5px;
 }
-
-/* define appear animation */
 .bounce-enter-active {
   animation: bounce-in 0.45s;
 }
-
 .bounce-leave-active {
   animation: bounce-in 0.2s reverse;
 }
@@ -175,11 +215,6 @@ export default {
     transform: scale(1);
   }
 }
-
-/* .v-enter-active,
-.v-leave-active {
-  transition: opacity 0.3s ease-in-out;
-}*/
 .v-enter-from,
 .v-leave-to {
   opacity: 0;

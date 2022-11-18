@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import CreateNoteForm from '@/components/CreateNoteForm.vue';
+import NotesList from '@/components/NotesList.vue';
+import DeletedNotesList from '@/components/DeletedNotesList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,27 +12,46 @@ const router = createRouter({
       component: () => import("@/views/NotFound.vue"),
     },
     {
-      path: '/',
-      name: 'login',
-      component: ()=>import('@/views/LoginForm.vue'),
-      alias: "/login"
+      path: "/",
+      name: "login",
+      component: () => import("@/views/LoginForm.vue"),
+      alias: "/login",
+    },
+        {
+      path: "/signup",
+      name: "signup",
+      component: () => import("@/views/SignUpForm.vue"),
     },
     {
-      path: '/home',
-      name: 'home',
-      component: ()=>import('@/views/Home.vue')
+      path: "/home",
+      name: "home",
+      redirect: "/home",
+      component: () => import("@/views/Home.vue"),
+      children: [{
+          path: "",
+          name: "homeView",
+          components: {
+            CreateNoteForm: CreateNoteForm,
+            NotesList: NotesList,
+          },
+        },
+      ],
     },
     {
-      path: '/signup',
-      name: 'signup',
-      component: ()=>import('@/views/SignUpForm.vue')
+      path: "/trash",
+      name: "trash",
+      redirect: "/trash",
+      component: () => import("@/views/Home.vue"),
+      children: [{
+        path: "",
+        name: "trashView",
+        components: {
+            NotesList: DeletedNotesList,
+          },
+        },
+      ],
     },
-    {
-      path: '/trash',
-      name: 'trash',
-      component: ()=>import('@/views/Trash.vue')
-    },
-  ]
+  ],
 });
 
 //route protection 

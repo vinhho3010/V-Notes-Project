@@ -74,7 +74,23 @@ const AuthModule = {
             await Swal.fire("","Tài khoản đã tồn tại. Xin vui lòng kiểm tra lại tên tài khoản", "error");
             console.log(error);
            }
-        }
+        },
+        logout() {
+            Swal.fire({
+                title: 'Đăng xuất',
+                text: 'Bạn có muốn đăng xuất?',
+                showDenyButton: true,
+                confirmButtonColor: "#DC3741",
+                denyButtonColor: "#BDB8B7",
+                confirmButtonText: 'Đăng xuất',
+                denyButtonText: `Không`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.clear();
+                    router.push('/');
+                }
+            })
+        },
     }
 }
 

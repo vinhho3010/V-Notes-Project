@@ -43,14 +43,11 @@ export default {
     props: {
         state: String,
     },
-    emits: ["logout"],
     computed: {
       ...mapGetters({getAccountInfor: "getAccountInfor"})
     },
     methods: {
-        logout() {
-            this.$emit("logout");
-        },
+      
     },
     
 }

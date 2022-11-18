@@ -24,20 +24,28 @@ const NotesModule = {
         getNoteSearchList(state){
             return state.noteSearchList.slice().reverse();          
         },
-        getReverseNoteList(state){
-            return state.noteList.slice().reverse();
-        },
         getPinNoteList(state){
             return state.noteList.slice().filter((note) =>{
-                return note.isPin == true
+                return note.isPin == true && note.isDeleted == false
             }).reverse();     
         },
         getNotPinNoteList(state){
             return state.noteList.slice().filter((note) =>{
-                return note.isPin == false
+                return note.isPin == false && note.isDeleted == false
             }).reverse();   
-        }
-    },
+        },
+        getDeletedNoteList(state){
+            return state.noteList.slice().filter((note) =>{
+                return note.isDeleted == true
+            }).reverse(); 
+        },
+        getNotDeletedNoteList(state){
+            return state.noteList.slice().filter((note) =>{
+                return note.isDeleted == false
+            }).reverse(); 
+        },
+        },
+        
     mutations: {
         SET_NOTE(state, newNote){
             state.note.ownerID = newNote.ownerID;
@@ -130,8 +138,9 @@ const NotesModule = {
             }
         const noteListGetter = state.noteList;
             const result = noteListGetter.filter(note => {
-                return note.content.trim().toLowerCase().includes(searchText.trim().toLowerCase()) 
-                        || note.title.trim().toLowerCase().includes(searchText.trim().toLowerCase());
+                return note.isDeleted==false &&
+                 (note.content.trim().toLowerCase().includes(searchText.trim().toLowerCase()) 
+                        || note.title.trim().toLowerCase().includes(searchText.trim().toLowerCase()));
             })
         //set search result into noteSarchList
          commit("SET_NOTE_SEARCH_LIST", result);

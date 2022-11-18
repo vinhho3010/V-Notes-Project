@@ -1,33 +1,42 @@
 <template>
     <div class="note-view">
         <!-- don't have any note display below text -->
-        <div v-if="getNoteList == [] || getNoteList == undefined" class="ml-[37%]  mt-20 text-2xl text-green-700">
-            Bạn chưa có ghi chú nào</div>
+        <div v-if="getNotDeletedNoteList.length == 0 || getNotDeletedNoteList == undefined"
+            class="ml-[40%] mt-10 text-2xl text-green-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24"
+                style="fill: rgba(229, 229, 229, 1);transform: ;msFilter:;">
+                <path
+                    d="M19 4h-3V2h-2v2h-4V2H8v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM5 20V7h14V6l.002 14H5z">
+                </path>
+                <path d="M7 9h10v2H7zm0 4h5v2H7z"></path>
+            </svg>
+            <p class="-mx-5">Bạn chưa có ghi chú nào</p>
+        </div>
         <!-- has note, display list note -->
         <div v-else class="note-list">
             <!-- display all of note with pin or not pinned note if search function is not being use -->
-            <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length==0"
+            <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length == 0"
                 class="block w-full ml-1 mb-2 text-[0.7rem] font-bold text-gray-500 uppercase">Được ghim</div>
             <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4 gap-y-5 sm:grid-cols-3 ">
                 <!-- list pin Note if has note is pined and do not has note is being search -->
                 <transition-group name="list">
-                    <NoteCard v-if="getPinNoteList.length != 0 && getNoteSearchList.length==0"
-                     v-for="PinNote in getPinNoteList" :key="PinNote._id" :note="PinNote" />
+                    <NoteCard v-if="getPinNoteList.length != 0 && getNoteSearchList.length == 0"
+                        v-for="PinNote in getPinNoteList" :key="PinNote._id" :note="PinNote" />
                 </transition-group>
             </div>
 
-            <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length==0"
+            <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length == 0"
                 class="block w-full ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Khác</div>
             <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4  gap-y-5 sm:grid-cols-3 ">
                 <!-- list NOT pin note -->
                 <transition-group name="list">
-                    <NoteCard v-if="getNotPinNoteList != [] && getNoteSearchList.length==0" v-for="note in getNotPinNoteList" :key="note._id"
-                        :note="note" />
+                    <NoteCard v-if="getNotPinNoteList != [] && getNoteSearchList.length == 0"
+                        v-for="note in getNotPinNoteList" :key="note._id" :note="note" />
                 </transition-group>
             </div>
         </div>
         <!-- if has note search list, display result match with it and hide another note -->
-        <div class="search-result" v-if="getNoteSearchList.length != 0" >
+        <div class="search-result" v-if="getNoteSearchList.length != 0">
             <div v-if="getNoteSearchList.length != 0"
                 class="block w-full ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Kết quả tìm kiếm
             </div>
@@ -62,7 +71,8 @@ export default {
             getNoteList: "getNoteList",
             getPinNoteList: "getPinNoteList",
             getNotPinNoteList: "getNotPinNoteList",
-            getNoteSearchList: "getNoteSearchList"
+            getNoteSearchList: "getNoteSearchList",
+            getNotDeletedNoteList: "getNotDeletedNoteList"
         }),
     },
     methods: {
