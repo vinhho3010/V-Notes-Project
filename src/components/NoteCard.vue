@@ -1,12 +1,18 @@
 <template>
-    <div @click="editableButton()" @blur="unEditableButton()" tabindex="0"
-        class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative bg-white shadow-custom-bold border-[1.5px] border-solid border-gray-300 ">
+    <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click="editNote()" tabindex="0"
+        class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative bg-white shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 ">
         <Transition>
             <div v-if="showEditButton" @click="editNote()"
-                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer hover:bg-gray-400 rounded-full">
-                <i class='bx bx-edit bx-xl'></i>
-            </div>
+                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer border-[1px] border-solid border-gray-300 hover:bg-gray-400 rounded-full">
+                <i class='bx bx-palette bx-xl'></i>              
+            </div>           
         </Transition>
+        <transition>
+            <div v-if="showEditButton" @click.stop="pinNote()"
+                class="pin absolute inline-block bg-white shadow-md border-[1px] border-gray-300 rounded-full -translate-x-7 -translate-y-7 px-[0.3rem] text-lg cursor-pointer hover:bg-gray-300">
+                <i :class="{ 'bxs-pin': note.isPin, 'bx-pin': !note.isPin }" class='bx'></i>
+        </div>
+        </transition>
         <div class="title mt-[0.85rem] max-h-6 break-words overflow-hidden">
             {{ note.title }}
         </div>
@@ -18,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
     props: {
@@ -36,6 +42,19 @@ export default {
         unEditableButton() {
             this.showEditButton = false
         },
+        async pinNote(){
+            this.note.isPin = !this.note.isPin;
+            this.$store.commit("SET_NOTE", this.note);
+            const payload = {
+                userId: this.getAccountInfor._id,
+                 note: this.note,};
+
+            //call action from store to update note
+            await this.updateNote(payload);
+
+            //reload edited notelist
+            await this.getAllNotes(this.getAccountInfor._id)
+        },
         editNote(){
             //set data for selected note to use in edit modal 
             this.$store.commit("SET_NOTE", this.note);
@@ -43,9 +62,13 @@ export default {
         },
         ...mapMutations({ displayEditModal: "displayEditModal",
                           SET_NOTE: "setNote"}),
+
+        ...mapActions({updateNote: "updateNote",
+        getAllNotes: "getAllNotes"}),
     },
     computed: {
-        ...mapGetters({getNote: "getNote"})
+        ...mapGetters({getNote: "getNote",
+        getAccountInfor: "getAccountInfor"}),
     }
 
 }
@@ -58,7 +81,7 @@ export default {
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .v-enter-from,

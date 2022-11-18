@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'signup',
       component: ()=>import('@/views/SignUpForm.vue')
     },
+    {
+      path: '/trash',
+      name: 'trash',
+      component: ()=>import('@/views/Trash.vue')
+    },
   ]
 });
 

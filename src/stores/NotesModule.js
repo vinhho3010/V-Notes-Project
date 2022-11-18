@@ -57,7 +57,6 @@ const NotesModule = {
         ADD_NEW_NOTE(state){
             //add new note to noteList 
             state.noteList.push(state.note);
-            console.log(state.noteList);
         },
         REFRESH_NOTE(state){
             state.note._id = "";
@@ -75,8 +74,6 @@ const NotesModule = {
                 const response = await axios.get(`${config.server}/notes/${userId}`).then((response) => {
                     //if user have note, store them into note store
                     commit("SET_NOTE_LIST", response.data.result);
-
-                    console.log(response.data.result);
                 });
             } catch (error) {
                 console.log(error);
@@ -93,6 +90,7 @@ const NotesModule = {
                     isPin: payload.note.isPin,
                 }).then((response)=> {
                     commit("SET_NOTE", response.data.result);
+                    //add new note to noteList
                     commit("ADD_NEW_NOTE");
                 })
             } catch (error) {
@@ -135,7 +133,7 @@ const NotesModule = {
                 return note.content.trim().toLowerCase().includes(searchText.trim().toLowerCase()) 
                         || note.title.trim().toLowerCase().includes(searchText.trim().toLowerCase());
             })
-        console.log(result);
+        //set search result into noteSarchList
          commit("SET_NOTE_SEARCH_LIST", result);
         }
     }

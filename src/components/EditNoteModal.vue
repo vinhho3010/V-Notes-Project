@@ -1,6 +1,8 @@
 <template>
   <Transition name="bounce">
-    <div v-if="getEditModalState"
+    <div
+    @click.self="closeEditModal()"
+    v-if="getEditModalState"
       class="fixed w-screen h-screen flex justify-center items-center bg-opacity-40 z-9999 bg-black">
       <form>
         <div class="flex flex-col min-h-auto max-h-[70vh] w-[30rem] bg-white shadow-custom rounded-xl  p-3 -mt-32">

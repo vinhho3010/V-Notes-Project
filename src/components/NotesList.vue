@@ -55,11 +55,7 @@ export default {
             note: {},
         }
     },
-    watch: {
-        getNoteSearchList(){
-            console.log(this.getNoteSearchList);
-        }
-    },
+
     computed: {
         ...mapGetters({
             getAccountInfor: "getAccountInfor",

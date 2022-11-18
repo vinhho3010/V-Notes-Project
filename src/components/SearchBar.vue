@@ -38,8 +38,7 @@ export default{
         
     },
     methods:{
-        ...mapActions({filterSearch: "filterSearch",
-                        getAllNotes: "getAllNotes"})
+        ...mapActions({filterSearch: "filterSearch"})
     }
 }
 </script>
