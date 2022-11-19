@@ -10,13 +10,13 @@
                 </path>
                 <path d="M7 9h10v2H7zm0 4h5v2H7z"></path>
             </svg>
-            <p class="-mx-5">Bạn chưa có ghi chú nào</p>
+            <p class="-ml-7">Bạn chưa có ghi chú nào</p>
         </div>
         <!-- has note, display list note -->
         <div v-else class="note-list">
             <!-- display all of note with pin or not pinned note if search function is not being use -->
             <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length == 0"
-                class="block w-full ml-1 mb-2 text-[0.7rem] font-bold text-gray-500 uppercase">Được ghim</div>
+                class="block ml-1 mb-2 text-[0.7rem] font-bold text-gray-500 uppercase">Được ghim</div>
             <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4 gap-y-5 sm:grid-cols-3 ">
                 <!-- list pin Note if has note is pined and do not has note is being search -->
                 <transition-group name="list">
@@ -26,7 +26,7 @@
             </div>
 
             <div v-if="getPinNoteList.length != 0 && getNoteSearchList.length == 0"
-                class="block w-full ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Khác</div>
+                class="block ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Khác</div>
             <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4  gap-y-5 sm:grid-cols-3 ">
                 <!-- list NOT pin note -->
                 <transition-group name="list">
@@ -38,7 +38,7 @@
         <!-- if has note search list, display result match with it and hide another note -->
         <div class="search-result" v-if="getNoteSearchList.length != 0">
             <div v-if="getNoteSearchList.length != 0"
-                class="block w-full ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Kết quả tìm kiếm
+                class="block ml-1 mb-2 mt-10 text-[0.7rem] font-bold text-gray-500 uppercase">Kết quả tìm kiếm
             </div>
             <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4  gap-y-5 sm:grid-cols-3 ">
                 <!-- list result note -->

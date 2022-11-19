@@ -2,13 +2,13 @@
     <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click="editNote()" tabindex="0"
         class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative bg-white shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 ">
         <Transition>
-            <div v-if="showEditButton" @click="editNote()"
-                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer border-[1px] border-solid border-gray-300 hover:bg-gray-400 rounded-full">
+            <div title="Chọn màu ghi chú" v-if="showEditButton" @click="editNote()"
+                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer  border-solid border-gray-300 hover:bg-gray-400 rounded-full">
                 <i class='bx bx-palette bx-xl'></i>              
             </div>           
         </Transition>
         <transition>
-            <div v-if="showEditButton" @click.stop="pinNote()"
+            <div title="Ghim ghi chú" v-if="showEditButton" @click.stop="pinNote()"
                 class="pin absolute inline-block bg-white shadow-md border-[1px] border-gray-300 rounded-full -translate-x-7 -translate-y-7 px-[0.3rem] text-lg cursor-pointer hover:bg-gray-300">
                 <i :class="{ 'bxs-pin': note.isPin, 'bx-pin': !note.isPin }" class='bx'></i>
         </div>
@@ -25,7 +25,7 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-
+//import ColorPicker from '@/components/ColorPicker.vue';
 export default {
     props: {
         note: {},

@@ -12,12 +12,12 @@
                     <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
                 </svg>
             </div>
-            <p class="-mx-20">Không có ghi chú nào trong thùng rác</p>
+            <p class="-ml-24">Không có ghi chú nào trong thùng rác</p>
         </div>
         <!-- has note, display list note -->
         <div v-else class="deleted-note-list">
             <!-- display all of notes have deleted -->
-            <div class=" mb-2 grid grid-flow-row-dense  md:grid-cols-4 gap-y-5 sm:grid-cols-3 ">
+            <div class=" mb-2 grid grid-flow-row-dense md:grid-cols-4 gap-y-5 sm:grid-cols-3 ">
                 <!-- list deleted note -->
                 <transition-group name="list">
                     <NoteCard v-if="getDeletedNoteList.length != 0" v-for="DeletedNote in getDeletedNoteList"

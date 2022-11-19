@@ -1,6 +1,6 @@
 <template>
-    <div class="w-screen relative">
-        <div class="w-full sticky top-0 z-50">
+    <div class="w-full relative">
+        <div class="w-full sticky top-0 left-0 right-0 z-50">
             <Header state="home"/>
         </div>
 

@@ -6,7 +6,7 @@
         <router-link  to="/home">
           <a href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
             <span class="inline-flex items-center justify-center h-12 w-12 text-xl text-gray-400"><i class='bx bx-bulb' ></i></span>
-            <span class="text-[0.95 rem] font-medium">Ghi chú</span>
+            <span class="text-[0.95rem] font-medium">Ghi chú</span>
           </a>
         </router-link>
       </li>
@@ -14,7 +14,7 @@
         <router-link to="/label">
           <a href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
             <span class="inline-flex items-center justify-center h-12 w-12 text-xl text-gray-400"><i class='bx bx-purchase-tag-alt' ></i></span>
-            <span class="text-[0.95 rem] font-medium">Quản lý nhãn</span>
+            <span class="text-[0.95rem] font-medium">Quản lý nhãn</span>
           </a>
         </router-link>
       </li>
@@ -22,7 +22,7 @@
         <router-link to="/trash">
           <a href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
             <span class="inline-flex items-center justify-center h-12 w-12 text-xl text-gray-400"><i class='bx bx-trash'></i></span>
-            <span class="text-[0.95 rem] font-medium">Thùng rác</span>
+            <span class="text-[0.95rem] font-medium">Thùng rác</span>
           </a>
         </router-link>
       </li>
@@ -32,7 +32,7 @@
         @click="logout()"
         href="#" class="flex flex-row items-center h-14 w-[95%] transform hover:translate-x-1 transition-transform ease-in duration-200 text-gray-500 rounded-r-full hover:text-gray-600 hover:bg-[#FFF5BD] focus:bg-[#FFF5BD]">
           <span class="inline-flex items-center justify-center h-12 w-12 text-xl text-gray-400"><i class="bx bx-log-out"></i></span>
-          <span class="text-[0.95 rem] font-medium">Đăng xuất</span>
+          <span class="text-[0.95rem] font-medium">Đăng xuất</span>
         </a>
       </li>
     </ul>

@@ -19,28 +19,31 @@ const NotesModule = {
             return state.note;
         },
         getNoteList(state){
+            if(state.noteList == undefined){
+                state.noteList = [];
+            }
             return state.noteList;          
         },
         getNoteSearchList(state){
             return state.noteSearchList.slice().reverse();          
         },
-        getPinNoteList(state){
-            return state.noteList.slice().filter((note) =>{
+        getPinNoteList(state, getters){
+            return getters.getNoteList.slice().filter((note) =>{
                 return note.isPin == true && note.isDeleted == false
             }).reverse();     
         },
-        getNotPinNoteList(state){
-            return state.noteList.slice().filter((note) =>{
+        getNotPinNoteList(state, getters){
+            return getters.getNoteList.slice().filter((note) =>{
                 return note.isPin == false && note.isDeleted == false
             }).reverse();   
         },
-        getDeletedNoteList(state){
-            return state.noteList.slice().filter((note) =>{
+        getDeletedNoteList(state, getters){
+            return getters.getNoteList.slice().filter((note) =>{
                 return note.isDeleted == true
             }).reverse(); 
         },
-        getNotDeletedNoteList(state){
-            return state.noteList.slice().filter((note) =>{
+        getNotDeletedNoteList(state, getters){
+            return getters.getNoteList.slice().filter((note) =>{
                 return note.isDeleted == false
             }).reverse(); 
         },

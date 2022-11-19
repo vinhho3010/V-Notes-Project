@@ -26,7 +26,7 @@
             </button>
 
             <button v-show="this.currentRoute=='/trash'" @click="restoreNote()"
-              class="w-22 text-sm bg-yellow-500 hover:bg-yellow-600 text-white font-bold ml-5 mt-3 py-1.5 px-6 rounded"
+              class="w-22 text-sm bg-yellow-400 hover:bg-yellow-500 text-white font-bold ml-5 mt-3 py-1.5 px-6 rounded"
               type="button">
               Khôi phục
             </button>
@@ -140,7 +140,6 @@ export default {
 
     //edit note chosen
     async editNote() {
-
       const payload = {
         userId: this.getAccountInfor._id,
         note: this.editedNote,
@@ -172,7 +171,6 @@ export default {
     },
     $route(to, from){
       this.currentRoute = this.$route.fullPath
-      console.log(this.currentRoute);
     }
   },
   mounted() {
