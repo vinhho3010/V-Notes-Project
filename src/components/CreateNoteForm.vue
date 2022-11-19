@@ -106,8 +106,6 @@ export default {
                   
                 await this.getAllNotes(this.getAccountInfor._id);
                 this.refreshInput();
-
-                
             }
         }
 

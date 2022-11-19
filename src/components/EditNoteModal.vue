@@ -5,7 +5,7 @@
     v-if="getEditModalState"
       class="fixed w-screen h-screen flex justify-center items-center bg-opacity-40 z-9999 bg-black">
       <form>
-        <div class="flex flex-col min-h-auto max-h-[70vh] w-[30rem] bg-white shadow-custom rounded-xl  p-3 -mt-32">
+        <div class="flex flex-col min-h-auto max-h-[70vh] w-[30rem] bg-white shadow-custom rounded-xl p-3 -mt-32">
           <div class="flex-row">
             <input v-model="editedNote.title"
               class="inputTitle py-2 px-3 form-control w-[90%] text-base inline-block focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"

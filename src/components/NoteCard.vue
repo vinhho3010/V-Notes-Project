@@ -1,9 +1,11 @@
 <template>
-    <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click="editNote()" tabindex="0"
-        class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative bg-white shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 ">
+   <div class="note-card">
+    <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click.self="editNote()" tabindex="0"
+        class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 "
+        :class="{'bg-white': note.color == '#ffffff'}, note.color">
         <Transition>
-            <div title="Chọn màu ghi chú" v-if="showEditButton" @click="editNote()"
-                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer  border-solid border-gray-300 hover:bg-gray-400 rounded-full">
+            <div title="Chọn màu ghi chú" v-if="showEditButton" @click="displayColorPicker()"
+                class="editButton absolute text-lg top-1 right-1 py-1 px-2 cursor-pointer border-solid border-gray-200 hover:bg-gray-300 rounded-full">
                 <i class='bx bx-palette bx-xl'></i>              
             </div>           
         </Transition>
@@ -13,26 +15,40 @@
                 <i :class="{ 'bxs-pin': note.isPin, 'bx-pin': !note.isPin }" class='bx'></i>
         </div>
         </transition>
-        <div class="title mt-[0.85rem] max-h-6 break-words overflow-hidden">
+        <div
+        @click="editNote()"
+        class="title mt-[0.85rem] max-h-6 break-words overflow-hidden">
             {{ note.title }}
         </div>
-        <div class="content mt-3 pb-1 max-h-[10rem] break-words overflow-hidden text-ellipsis">
+        
+        <div
+        @click="editNote()"
+        class="content mt-3 pb-1 max-h-[10rem] break-words overflow-hidden text-ellipsis">
             {{ note.content }}
             <p class="text-lg text-gray-400" v-if="note.title=='' && note.content=='' ">Ghi chú trống</p>
         </div>
     </div>
+    <div class="color-picker">
+        <ColorPicker :isOpen="showColorPicker"
+                     :currentNote="note"/>
+    </div>
+   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-//import ColorPicker from '@/components/ColorPicker.vue';
+import ColorPicker from '@/components/ColorPicker.vue';
 export default {
     props: {
         note: {},
     },
+    components: {
+        ColorPicker,
+    },
     data() {
         return {
             showEditButton: false,
+            showColorPicker: false,
         }
     },
     methods: {
@@ -54,6 +70,9 @@ export default {
 
             //reload edited notelist
             await this.getAllNotes(this.getAccountInfor._id)
+        },
+        displayColorPicker(){
+            this.showColorPicker = !this.showColorPicker;
         },
         editNote(){
             //set data for selected note to use in edit modal 

@@ -1,84 +1,73 @@
-<template lang="">
-    <div>
-        <!-- component -->
-<div class="antialiased sans-serif bg-gray-200 py-16 h-screen">
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-	<style>
-		[x-cloak] {
-			display: none;
-		}
-	</style>
-	<div x-data="app()" x-cloak>
-		<div class="max-w-sm mx-auto py-16 my-16">
-			 
-			<div class="mb-5">
-				<div class="flex items-center">
-					<div>
-						<label for="colorSelected" class="block font-bold mb-1">Select Color</label>
-						<input id="colorSelected" type="text" placeholder="Pick a color"
-							class="border border-transparent shadow px-4 py-2 leading-normal text-gray-700 bg-white rounded-md focus:outline-none focus:shadow-outline"
-							readonly 
-							x-model="colorSelected">
-					</div>
-					<div class="relative ml-3 mt-8">
-						<button type="button" @click="isOpen = !isOpen" 
-							class="w-10 h-10 rounded-full focus:outline-none focus:shadow-outline inline-flex p-2 shadow"
-							:style="`background: ${colorSelected}; color: white`"
-						>
-							<svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M15.584 10.001L13.998 8.417 5.903 16.512 5.374 18.626 7.488 18.097z"/><path d="M4.03,15.758l-1,4c-0.086,0.341,0.015,0.701,0.263,0.949C3.482,20.896,3.738,21,4,21c0.081,0,0.162-0.01,0.242-0.03l4-1 c0.176-0.044,0.337-0.135,0.465-0.263l8.292-8.292l1.294,1.292l1.414-1.414l-1.294-1.292L21,7.414 c0.378-0.378,0.586-0.88,0.586-1.414S21.378,4.964,21,4.586L19.414,3c-0.756-0.756-2.072-0.756-2.828,0l-2.589,2.589l-1.298-1.296 l-1.414,1.414l1.298,1.296l-8.29,8.29C4.165,15.421,4.074,15.582,4.03,15.758z M5.903,16.512l8.095-8.095l1.586,1.584 l-8.096,8.096l-2.114,0.529L5.903,16.512z"/></svg>
-						</button>
-
-						<div x-show="isOpen" @click.away="isOpen = false" x-transition:enter="transition ease-out duration-100 transform"
-							x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-							x-transition:leave="transition ease-in duration-75 transform"
-							x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-							class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg">
-							<div class="rounded-md bg-white shadow-xs px-4 py-3">
-								<div class="flex flex-wrap -mx-2">
-								<template x-for="(color, index) in colors" :key="index">
-									<div 
-										class="px-2"
-									>
-										<template x-if="colorSelected === color">	
-											<div
-												class="w-8 h-8 inline-flex rounded-full cursor-pointer border-4 border-white"
-												:style="`background: ${color}; box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);`"
-											></div>
-										</template>
-										
-										<template x-if="colorSelected != color">
-											<div
-												@click="colorSelected = color"
-												@keydown.enter="colorSelected = color"
-												role="checkbox"
-												  tabindex="0"
-												  :aria-checked="colorSelected"	
-												class="w-8 h-8 inline-flex rounded-full cursor-pointer border-4 border-white focus:outline-none focus:shadow-outline"
-												:style="`background: ${color};`"
-											></div>
-										</template>
-									</div>
-								</template>
-							</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			 
+<template>
+	<transition>
+	  <div ref="colorPicker" v-if="isOpen" tabindex="0" @blur="hideColorPicker()"
+		class="w-90% p-3 absolute h-12 mx-auto translate-y-1 translate-x-1 flex flex-row shadow-md bg-gray-200 rounded-lg z-20">
+		<div ref="colorList" v-for="(color, index) in colors" :key="index" class="color-chosen rounded-full mr-2 p-3  cursor-pointer"
+			:class="[{ 'bg-white': color == '#ffffff', 'ring-offset-green-300 ring-2': colorSelected == color }, color]"
+			@click="setColor(color)">
 		</div>
-	</div>
-
-	<script>
-		function app() {
-			return {
-				isOpen: false,
-				colors: ['#2196F3', '#009688', '#9C27B0', '#FFEB3B', '#afbbc9', '#4CAF50', '#2d3748', '#f56565', '#ed64a6'],
-				colorSelected: '#2196F3'
-			}
-		}
-	</script>
-  </div>
-    </div>
+	  </div>
+	</transition>
 </template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+	name: "ColorPicker",
+	props: {
+		isOpen: Boolean,
+		currentNote: Object,
+	},
+	data() {
+		return {
+			colors: ['#ffffff', 'bg-blue-200', 'bg-yellow-200', 'bg-gray-300', 'bg-green-300', 'bg-red-200', 'bg-purple-300'],
+			colorSelected: this.currentNote.color,
+		}
+	},
+	computed: {
+		...mapGetters({getAccountInfor: "getAccountInfor"})
+	},
+	methods: {
+		hideColorPicker(){
+			this.isOpen = !this.isOpen;
+		},
+		async setColor(color) {
+			this.colorSelected = color;
+			this.currentNote.color = this.colorSelected;
+
+			this.$store.commit("SET_NOTE", this.currentNote);
+            const payload = {
+                userId: this.getAccountInfor._id,
+                note: this.currentNote,
+			};
+            //call action from store to update note
+            await this.updateNote(payload);
+
+            //reload edited notelist
+            await this.getAllNotes(this.getAccountInfor._id)
+			console.log(this.colorSelected);
+		},
+		...mapActions({updateNote: "updateNote", 
+					   getAllNotes: "getAllNotes"})
+	},
+	watch:{
+		isOpen(){
+			console.log("opened");
+		}
+	}
+}
+</script>    
+
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
+     
