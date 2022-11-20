@@ -1,12 +1,13 @@
 <template>
 	<transition>
-	  <div ref="colorPicker" v-if="isOpen" tabindex="0" @blur="hideColorPicker()"
-		class="w-90% p-3 absolute h-12 mx-auto translate-y-1 translate-x-1 flex flex-row shadow-md bg-gray-200 rounded-lg z-20">
-		<div ref="colorList" v-for="(color, index) in colors" :key="index" class="color-chosen rounded-full mr-2 p-3  cursor-pointer"
-			:class="[{ 'bg-white': color == '#ffffff', 'ring-offset-green-300 ring-2': colorSelected == color }, color]"
-			@click="setColor(color)">
+		<div ref="colorPicker" v-if="isOpen" tabindex="0"
+			class="w-90% p-3 absolute h-12 mx-auto translate-y-1 translate-x-1 flex flex-row shadow-md bg-gray-200 rounded-lg z-20">
+			<div ref="colorList" v-for="(color, index) in colors" :key="index"
+				class="color-chosen rounded-full mr-2 p-3  cursor-pointer"
+				:class="[{ 'bg-white': color == '#ffffff', 'ring-offset-green-300 ring-2': colorSelected == color }, color]"
+				@click="setColor(color)">
+			</div>
 		</div>
-	  </div>
 	</transition>
 </template>
 
@@ -26,10 +27,10 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({getAccountInfor: "getAccountInfor"})
+		...mapGetters({ getAccountInfor: "getAccountInfor" })
 	},
 	methods: {
-		hideColorPicker(){
+		hideColorPicker() {
 			this.isOpen = !this.isOpen;
 		},
 		async setColor(color) {
@@ -37,37 +38,33 @@ export default {
 			this.currentNote.color = this.colorSelected;
 
 			this.$store.commit("SET_NOTE", this.currentNote);
-            const payload = {
-                userId: this.getAccountInfor._id,
-                note: this.currentNote,
+			const payload = {
+				userId: this.getAccountInfor._id,
+				note: this.currentNote,
 			};
-            //call action from store to update note
-            await this.updateNote(payload);
+			//call action from store to update note
+			await this.updateNote(payload);
 
-            //reload edited notelist
-            await this.getAllNotes(this.getAccountInfor._id)
-			console.log(this.colorSelected);
+			//reload edited notelist
+			await this.getAllNotes(this.getAccountInfor._id);
 		},
-		...mapActions({updateNote: "updateNote", 
-					   getAllNotes: "getAllNotes"})
+		...mapActions({
+			updateNote: "updateNote",
+			getAllNotes: "getAllNotes"
+		})
 	},
-	watch:{
-		isOpen(){
-			console.log("opened");
-		}
-	}
 }
 </script>    
 
-<style>
+<style scoped>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
 </style>
      

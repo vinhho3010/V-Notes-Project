@@ -1,5 +1,10 @@
 <template>
     <div class="note-view">
+        <!-- clean trash title -->
+        <div v-if="getDeletedNoteList.length != 0" @click="cleanTrash()"
+            class="clean-trash translate-x-[58rem] text-blue-400 hover:bg-blue-100 mt-2 mb-5 text-base rounded-lg w-48 text-center py-2 cursor-pointer">
+            <p>Dọn sạch thùng rác</p>
+        </div>
         <!-- don't have any note display below text -->
         <div v-if="getDeletedNoteList.length == 0 || getDeletedNoteList == undefined"
             class="ml-[37%]  mt-20 text-2xl text-green-700">
@@ -32,6 +37,7 @@
 <script>
 import NoteCard from '@/components/NoteCard.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import Swal from 'sweetalert2';
 
 export default {
     components: {
@@ -42,21 +48,46 @@ export default {
             note: {},
         }
     },
-
     computed: {
         ...mapGetters({
             getAccountInfor: "getAccountInfor",
             getNoteList: "getNoteList",
-            getPinNoteList: "getPinNoteList",
-            getNotPinNoteList: "getNotPinNoteList",
-            getNoteSearchList: "getNoteSearchList",
             getDeletedNoteList: "getDeletedNoteList"
-
         }),
     },
     methods: {
-        ...mapActions({ getAllNotes: "getAllNotes" }),
-        ...mapMutations["SET_NOTE_SEARCH_LIST"]
+        ...mapActions({ getAllNotes: "getAllNotes",
+                        deleteNote: "deleteNote" }),
+        ...mapMutations["SET_NOTE_SEARCH_LIST"],
+        cleanTrash() {
+            //show confirm modal to delete note
+            Swal.fire({
+                title: 'Xoá',
+                text: 'Bạn muốn xoá tất cả ghi chú khỏi danh sách? Tất cả ghi chú sẽ bị xoá vĩnh viễn và không thể khôi phục',
+                showDenyButton: true,
+                confirmButtonColor: "#DC3741",
+                denyButtonColor: "#BDB8B7",
+                confirmButtonText: 'Xoá',
+                denyButtonText: `Huỷ bỏ`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteAllNote();
+                }
+            });  
+        },
+        async deleteAllNote(){
+            //delete all deleted notes
+            await this.getDeletedNoteList.forEach(deletedNote => {
+                let payload = {
+                    note: deletedNote,
+                };
+                this.deleteNote(payload);
+            });
+            //show alert notification
+            Swal.fire("", "Thùng rác đã được dọn sạch", "success");
+            //reload edited notelist
+            await this.getAllNotes(this.getAccountInfor._id);
+        }
     },
     async mounted() {
         await this.getAllNotes(this.getAccountInfor._id);

@@ -7,9 +7,11 @@
       <span class="font-semibold text-xl tracking-tight cursor-default">V-Notes</span>
     </div>
     
-    <div v-if="state == 'home'">
-      <SearchBar/>
-    </div>
+    <transition>
+      <div v-if="state == 'home' && this.currentRoute == '/home'">
+        <SearchBar/>
+      </div>
+    </transition>
     
     <div>
       <a v-if="state == 'logInForm'"
@@ -35,7 +37,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import SearchBar from './SearchBar.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
 export default {
     name: "Header",
@@ -43,13 +45,36 @@ export default {
     props: {
         state: String,
     },
+    data(){
+      return {
+        currentRoute: ""
+      }
+    },
     computed: {
       ...mapGetters({getAccountInfor: "getAccountInfor"})
     },
     methods: {
       
     },
-    
+    watch: {
+      $route(to, from){
+      this.currentRoute = this.$route.fullPath
+    }
+    },
+    mounted(){
+     this.currentRoute = "/home"
+  },  
 }
 </script>
+
+<style scoped>
+.v-enter-active {
+	transition: opacity 0.25s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+	opacity: 0;
+}
+</style>
 
