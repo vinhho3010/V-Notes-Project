@@ -1,10 +1,10 @@
 <template>
 	<transition>
 		<div ref="colorPicker" v-if="isOpen" tabindex="0"
-			class="w-90% p-3 absolute h-12 mx-auto translate-y-1 translate-x-1 flex flex-row shadow-md bg-gray-200 rounded-lg z-20">
+			class="w-90% p-3 h-12 mx-auto shadow-custom-1 flex flex-row shadow-md bg-white rounded-lg z-20">
 			<div ref="colorList" v-for="(color, index) in colors" :key="index"
 				class="color-chosen rounded-full mr-2 p-3  cursor-pointer"
-				:class="[{ 'bg-white': color == '#ffffff', 'ring-offset-green-300 ring-2': colorSelected == color }, color]"
+				:class="[{ 'bg-white border-[1px] border-gray-300': color == '#ffffff', 'ring-offset-green-300 ring-2': colorSelected == color }, color]"
 				@click="setColor(color)">
 			</div>
 		</div>

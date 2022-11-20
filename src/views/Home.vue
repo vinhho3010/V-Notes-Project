@@ -52,3 +52,13 @@ export default {
 }
 
 </script>
+
+<style>
+.shadow-custom {
+    box-shadow: 0 0 3px;
+}
+
+.shadow-custom-1 {
+    box-shadow: 0 0 1.5px;
+}
+</style>

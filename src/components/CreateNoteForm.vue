@@ -31,18 +31,32 @@
                         type="button">
                         Đóng
                     </button>
+
+                        <div
+                        :class="[{'bg-gray-300': showColorPicker==true},isVisible]" title="Chọn màu ghi chú" @click="displayColorPicker()"
+                            class="editButton absolute text-lg top-2 right-2 py-1 px-2 cursor-pointer border-solid border-gray-200 hover:bg-gray-300 rounded-full">
+                            <i class='bx bx-palette bx-xl'></i>
+                        </div>
+
                 </div>
             </div>
         </form>
+        <div :class="isVisible" class="color-picker absolute translate-y-28 z-30">
+            <ColorPicker :isOpen="showColorPicker" :currentNote="note" />
+        </div>
     </div>
 </template>
 
 <script>
+import ColorPicker from '@/components/ColorPicker.vue';
 import { mapActions, mapGetters } from 'vuex';
 import Swal from 'sweetalert2';
 
 export default {
     name: "CreateNoteForm",
+    components: {
+        ColorPicker,
+    },
     data() {
         return {
             note: {
@@ -53,6 +67,7 @@ export default {
                 isPin: false,
             },
             isVisible: "hidden",
+            showColorPicker: false,
         }
     },
     computed: {
@@ -71,10 +86,14 @@ export default {
         hideForm(){
             this.isVisible = 'hidden'
         },
+        displayColorPicker(){
+            this.showColorPicker = !this.showColorPicker;
+        },
         refreshInput(){
             this.note.content = "";
             this.note.title = "";
             this.note.isPin = false;
+            this.showColorPicker = false;
         },
         async saveNote(){
             const Toast = Swal.mixin({
@@ -112,9 +131,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.shadow-custom {
-    box-shadow: 0 0 5px;
-}
-</style>

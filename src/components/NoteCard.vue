@@ -28,7 +28,7 @@
             <p class="text-lg text-gray-400" v-if="note.title=='' && note.content=='' ">Ghi chú trống</p>
         </div>
     </div>
-    <div class="color-picker">
+    <div class="color-picker translate-y-1 translate-x-1 absolute">
         <ColorPicker :isOpen="showColorPicker"
                      :currentNote="note"/>
     </div>

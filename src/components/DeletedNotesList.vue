@@ -58,7 +58,9 @@ export default {
     methods: {
         ...mapActions({ getAllNotes: "getAllNotes",
                         deleteNote: "deleteNote" }),
+
         ...mapMutations["SET_NOTE_SEARCH_LIST"],
+        
         cleanTrash() {
             //show confirm modal to delete note
             Swal.fire({
