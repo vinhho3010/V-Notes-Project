@@ -7,7 +7,8 @@
 
         <div class="w-full flex flex-row mt-0">
             <div class="basis-1/6">
-                <SideNav :isShow = showSideNav />
+                <SideNav :isShow = showSideNav
+                         :currentRoute = "currentRoute" />
             </div>
             <div class="basis-5/6">
                 <div class="w-full mb-5 mr-9">
