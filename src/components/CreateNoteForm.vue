@@ -84,7 +84,8 @@ export default {
             this.note.isPin = !this.note.isPin;
         },
         hideForm(){
-            this.isVisible = 'hidden'
+            this.isVisible = 'hidden';
+            this.showColorPicker = false;
         },
         displayColorPicker(){
             this.showColorPicker = !this.showColorPicker;

@@ -1,7 +1,7 @@
 <template>
-   <div class="note-card">
-    <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click.self="editNote()" tabindex="0"
-        class="w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl relative shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 "
+   <div class="note-card" @blur.self="showColorPicker=false" tabindex="0">
+    <div @mouseover="editableButton()" @mouseleave="unEditableButton()" @click.self="editNote()" 
+        class="relative w-[90%] min-h-[30px] max-h-60 pt-4 pb-2 px-3 rounded-xl shadow-custom-bold border-[1.5px] cursor-default border-solid border-gray-300 "
         :class="{'bg-white': note.color == '#ffffff'}, note.color">
         <Transition>
             <div title="Chọn màu ghi chú" v-if="showEditButton" @click="displayColorPicker()"
@@ -28,7 +28,7 @@
             <p class="text-lg text-gray-400" v-if="note.title=='' && note.content=='' ">Ghi chú trống</p>
         </div>
     </div>
-    <div class="color-picker translate-y-1 translate-x-1 absolute">
+    <div class="color-picker translate-y-1 translate-x-1 absolute z-30">
         <ColorPicker :isOpen="showColorPicker"
                      :currentNote="note"/>
     </div>

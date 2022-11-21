@@ -42,23 +42,35 @@
               type="button">
               Huỷ bỏ
             </button>
-          </div>
+            <div :class="[{'bg-gray-300': showColorPicker==true}]" title="Chọn màu ghi chú" @click="displayColorPicker()"
+              class="editButton absolute text-lg top-3 right-1 py-1 px-2 cursor-pointer border-solid border-gray-200 hover:bg-gray-300 rounded-full">
+              <i class='bx bx-palette bx-xl'></i>
+            </div>
+            </div>
         </div>
       </form>
+      <div class="color-picker absolute translate-y-20">
+            <ColorPicker :isOpen="showColorPicker" :currentNote="editedNote" />
+        </div>
     </div>
   </Transition>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import ColorPicker from '@/components/ColorPicker.vue';
 import Swal from 'sweetalert2'
 export default {
   props: {
     showEditModal: Boolean,
   },
+  components: {
+    ColorPicker,
+  },
   data() {
     return {
       isPin: false,
+      showColorPicker: false,
       currentRoute: "",
       editedNote: {}
     }
@@ -69,7 +81,14 @@ export default {
     pinNote() {
       this.editedNote.isPin = !this.editedNote.isPin;
     },
-
+    closeEditModal(){
+      this.$store.commit("closeEditModal");
+      //hide color picker after update note
+      this.showColorPicker = false;
+    },
+    displayColorPicker(){
+      this.showColorPicker = !this.showColorPicker;
+    },
     confirmDeleteNote() {
       let notiText = "Bạn muốn xoá vĩnh viễn ghi chú này?";
       if(this.currentRoute == "/home"){
@@ -148,6 +167,9 @@ export default {
       await this.updateNote(payload);
       //reload edited notelist
       await this.getAllNotes(this.getAccountInfor._id);
+
+
+
       this.closeEditModal()
       Swal.fire("", "Ghi chú được cập nhật thành công", "success");
     },

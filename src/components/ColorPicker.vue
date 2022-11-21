@@ -1,6 +1,6 @@
 <template>
 	<transition>
-		<div ref="colorPicker" v-if="isOpen" tabindex="0"
+		<div ref="colorPicker" v-if="isOpen"
 			class="w-90% p-3 h-12 mx-auto shadow-custom-1 flex flex-row shadow-md bg-white rounded-lg z-20">
 			<div ref="colorList" v-for="(color, index) in colors" :key="index"
 				class="color-chosen rounded-full mr-2 p-3  cursor-pointer"
@@ -22,8 +22,8 @@ export default {
 	},
 	data() {
 		return {
-			colors: ['#ffffff', 'bg-blue-200', 'bg-yellow-200', 'bg-gray-300', 'bg-green-300', 'bg-red-200', 'bg-purple-300'],
-			colorSelected: this.currentNote.color,
+			colors: ['#ffffff', 'bg-blue-200', 'bg-yellow-200', 'bg-gray-200', 'bg-green-300', 'bg-red-200', 'bg-purple-300'],
+			colorSelected: this.currentNote.color || '#ffffff',
 		}
 	},
 	computed: {
@@ -42,8 +42,12 @@ export default {
 				userId: this.getAccountInfor._id,
 				note: this.currentNote,
 			};
-			//call action from store to update note
-			await this.updateNote(payload);
+
+			//if note has description update it
+			if (this.currentNote.content != '' || this.currentNote.title != '') {
+				//call action from store to update note
+				await this.updateNote(payload);
+			}
 
 			//reload edited notelist
 			await this.getAllNotes(this.getAccountInfor._id);
