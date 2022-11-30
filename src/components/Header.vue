@@ -1,6 +1,9 @@
 <template>
   <nav class=" flex items-center justify-items-center justify-between flex-wrap bg-[#579981] p-4 max-w-screen"
        :class="{'p-2': state == 'home'}">
+       <!-- <div class="">
+        <i class='bx bx-menu'></i>
+       </div> -->
     <div class="flex items-center flex-shrink-0 ml-4 text-white mr-6"
       >
       <img class="fill-current h-8 w-8 mr-2" width="74" height="74" viewBox="0 0 54 54" src="../assets/MainIcon.png" />

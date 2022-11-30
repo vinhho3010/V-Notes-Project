@@ -14,7 +14,9 @@
               <i :class="{ 'bxs-pin': editedNote.isPin, 'bx-pin': !editedNote.isPin }" class='bx'></i>
             </div>
           </div>
-          <textarea v-model="editedNote.content" rows="4"
+          <textarea
+            spellcheck=false
+            v-model="editedNote.content" rows="4"
             class="py-2 px-3 form-control block w-full text-base focus:text-gray-700 focus:bg-white focus:border-transparent focus:outline-none"
             placeholder="Tạo ghi chú..." id=""></textarea>
           <div class="flex justify-around">

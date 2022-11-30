@@ -27,6 +27,11 @@ const NotesModule = {
         getNoteSearchList(state){
             return state.noteSearchList.slice().reverse();          
         },
+        getNoteSearchListColor(state, color){
+            return state.noteSearchList.slice().filter((note) =>{
+                return note.color == color
+            }).reverse();          
+        },
         getPinNoteList(state, getters){
             return getters.getNoteList.slice().filter((note) =>{
                 return note.isPin == true && note.isDeleted == false

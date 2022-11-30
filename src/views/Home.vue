@@ -5,7 +5,7 @@
                     :currentRoute = "currentRoute" />
         </div>
 
-        <div class="w-full flex flex-row mt-0">
+        <div class="w-full flex flex-row mt-0 z-500">
             <div class="basis-1/6">
                 <SideNav :isShow = showSideNav
                          :currentRoute = "currentRoute" />
