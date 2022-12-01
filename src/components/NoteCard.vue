@@ -34,7 +34,7 @@
       </transition>
       <div
         @click="editNote()"
-        class="title mt-[0.85rem] max-h-6 break-words overflow-hidden"
+        class="title mt-[0.85rem] max-h-6 break-words overflow-hidden font-semibold"
       >
         {{ note.title }}
       </div>
